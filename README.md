@@ -9,9 +9,8 @@
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS-3DDC84?logo=android&logoColor=white)](https://android.com)
 [![Download APK](https://img.shields.io/badge/Download-Release%20APK%20(v1.0)-success?logo=android&logoColor=white)](https://github.com/D3MONOXXIZZ/kharchabook/releases/tag/v1.0.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Academic Project](https://img.shields.io/badge/Bahria%20University-BS--IT%206A-003366)](https://bahria.edu.pk)
 
-[Overview](#-overview) • [Key Features](#-key-features) • [Screenshots](#-visual-showcase--screenshots) • [Design System](#-bespoke-design-system) • [Architecture](#-architecture--tech-stack) • [Installation](#-getting-started) • [Authors](#-team--authors)
+[Overview](#-overview) • [Key Features](#-key-features) • [Screenshots](#-visual-showcase--screenshots) • [Design System](#-bespoke-design-system) • [Architecture](#-architecture--tech-stack) • [Installation](#-getting-started) • [Authors](#-authors--maintainers)
 
 </div>
 
@@ -23,8 +22,7 @@ University students living on monthly allowances, hostel mess charges, and commu
 
 **KharchaBook** gives students an ultra-fast way to record expenses in under 10 seconds, track daily burn rates against monthly allowances, and explore financial health through tangible visuals.
 
-> **Course Project:** Mobile Application Development (MAD) — BS-IT 6A, Bahria University Islamabad.  
-> **Milestone:** Assignment 2 — Complete UI & Front-End Design System.
+> **Milestone:** Complete UI & Front-End Design System.
 
 ---
 
@@ -63,7 +61,7 @@ University students living on monthly allowances, hostel mess charges, and commu
 | **S4: Dashboard (OLED Dark)** | **S6: Trend Chart (OLED Dark)** | **S6: Dot Matrix Breakdown (OLED Dark)** |
 |:---:|:---:|:---:|
 | <img src="Screenshots/Screenshot_20261110-030421.png" width="260" alt="Dashboard Dark" /> | <img src="Screenshots/Screenshot_20261110-030427.png" width="260" alt="Analytics Trend Dark" /> | <img src="Screenshots/Screenshot_20261110-030433.png" width="260" alt="Dot Matrix Breakdown Dark" /> |
-| *BUIC IT-6A virtual student pass & volt lime indicators* | *High-contrast spending chart with spike detection* | *Glowing neon matrix ring & discrete category meters* |
+| *Virtual student allowance card & volt lime indicators* | *High-contrast spending chart with spike detection* | *Glowing neon matrix ring & discrete category meters* |
 
 ---
 
@@ -159,14 +157,10 @@ lib/
 
 ---
 
-## 👥 Team & Authors
+## 👥 Authors & Maintainers
 
-Developed for **Mobile Application Development (MAD)** laboratory course at **Bahria University Islamabad**:
-
-- **Zain Kashif** — Enrollment: `01-135232-107` (Lead Mobile & UI Developer)
-- **Huraira Minhas** — Enrollment: `01-135232-030` (UI Architecture & State Specialist)
-
-*Department of Computer Science • Section BS-IT 6A*
+- **Zain Kashif** (Lead Mobile & UI Developer)
+- **Huraira Minhas** (UI Architecture & State Specialist)
 
 ---
 
