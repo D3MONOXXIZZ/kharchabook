@@ -129,7 +129,7 @@ class ExpenseProvider extends ChangeNotifier {
     try {
       final newExpense = Expense(
         id: '',
-        userId: 'user_bahria_001',
+        userId: 'user_001',
         title: title.trim(),
         amount: amount,
         type: type,

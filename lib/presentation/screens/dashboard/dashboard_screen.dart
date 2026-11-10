@@ -118,7 +118,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  isDark ? studentName : 'Bahria Student • 6A',
+                  studentName.isNotEmpty ? studentName : 'Student Account',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w900,

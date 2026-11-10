@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/config/supabase_config.dart';
 import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
 import 'data/mock/mock_auth_repository.dart';
 import 'data/mock/mock_expense_repository.dart';
+import 'data/repositories/supabase_auth_repository.dart';
+import 'data/repositories/supabase_expense_repository.dart';
 import 'domain/repositories/auth_repository.dart';
 import 'domain/repositories/expense_repository.dart';
 import 'presentation/providers/auth_provider.dart';
@@ -22,8 +26,25 @@ void main() async {
     // Graceful fallback on non-supported platforms or web
   }
 
-  final AuthRepository authRepository = MockAuthRepository();
-  final ExpenseRepository expenseRepository = MockExpenseRepository();
+  AuthRepository authRepository = MockAuthRepository();
+  ExpenseRepository expenseRepository = MockExpenseRepository();
+
+  if (SupabaseConfig.isConfigured) {
+    try {
+      await Supabase.initialize(
+        url: SupabaseConfig.url,
+        // ignore: deprecated_member_use
+        anonKey: SupabaseConfig.anonKey,
+      );
+      authRepository = SupabaseAuthRepository();
+      expenseRepository = SupabaseExpenseRepository();
+      debugPrint('KharchaBook: Supabase cloud backend successfully initialized.');
+    } catch (e) {
+      debugPrint('KharchaBook: Supabase init fallback to Mock repositories: $e');
+      authRepository = MockAuthRepository();
+      expenseRepository = MockExpenseRepository();
+    }
+  }
 
   runApp(
     MultiProvider(

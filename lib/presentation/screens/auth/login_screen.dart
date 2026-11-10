@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'zain.it6a@bahria.edu.pk');
+  final _emailController = TextEditingController(text: 'demo@kharchabook.app');
   final _passwordController = TextEditingController(text: 'password123');
   bool _obscurePassword = true;
 
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomTextField(
                     controller: _emailController,
                     label: 'Student Email',
-                    hint: 'student@bahria.edu.pk',
+                    hint: 'student@university.edu.pk',
                     prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
                     validator: (val) {

@@ -60,7 +60,9 @@ class Expense {
       id: json['id'] as String,
       userId: json['user_id'] as String,
       title: json['title'] as String,
-      amount: (json['amount'] as num).toDouble(),
+      amount: json['amount'] is num
+          ? (json['amount'] as num).toDouble()
+          : (double.tryParse(json['amount']?.toString() ?? '0') ?? 0.0),
       type: json['type'] as String,
       categoryId: json['category_id'] as int,
       category: resolvedCategory ??

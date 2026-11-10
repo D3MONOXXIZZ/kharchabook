@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/expense_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../auth/login_screen.dart';
@@ -43,7 +44,16 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     if (!mounted) return;
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final expenseProvider = Provider.of<ExpenseProvider>(context, listen: false);
+
+    if (authProvider.isLoading) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (!mounted) return;
+    }
+
     if (authProvider.isAuthenticated) {
+      await expenseProvider.refreshData(authProvider.monthlyBudget);
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const MainShellScreen()),
       );
@@ -145,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ),
                     ),
                     child: Text(
-                      'Bahria University Islamabad • BS-IT 6A',
+                      'Student Budget & Expense Tracker',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,

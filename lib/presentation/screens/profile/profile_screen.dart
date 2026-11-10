@@ -132,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
     final auth = context.watch<AuthProvider>();
     final user = auth.currentUser;
     final name = user?.name ?? 'Zain Kashif';
-    final email = user?.email ?? 'zain.it6a@bahria.edu.pk';
+    final email = user?.email ?? 'student@kharchabook.app';
     final budget = auth.monthlyBudget;
 
     final cardBg = isDark ? AppColors.darkCard : AppColors.pastelCard;
@@ -240,7 +240,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'BS-IT 6A Section',
+                        'Active Student',
                         style: TextStyle(fontSize: 11, color: secondaryTextColor),
                       ),
                     ],
@@ -275,7 +275,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Bahria University',
+                        'University Edition',
                         style: TextStyle(fontSize: 11, color: secondaryTextColor),
                       ),
                     ],

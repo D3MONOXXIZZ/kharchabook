@@ -35,7 +35,9 @@ class UserProfile {
       id: json['id'] as String,
       name: json['name'] as String? ?? 'Student User',
       email: json['email'] as String? ?? '',
-      monthlyBudget: (json['monthly_budget'] as num?)?.toDouble() ?? 15000.0,
+      monthlyBudget: json['monthly_budget'] is num
+          ? (json['monthly_budget'] as num).toDouble()
+          : (double.tryParse(json['monthly_budget']?.toString() ?? '15000') ?? 15000.0),
       updatedAt: json['updated_at'] != null
           ? DateTime.parse(json['updated_at'] as String)
           : DateTime.now(),

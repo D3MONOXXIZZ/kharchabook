@@ -76,10 +76,17 @@ class SupabaseExpenseRepository implements ExpenseRepository {
     final user = _client.auth.currentUser;
     if (user == null) throw Exception('No authenticated user');
 
-    final jsonPayload = expense.toJson();
-    jsonPayload['user_id'] = user.id;
-    if (expense.id.isEmpty) {
-      jsonPayload.remove('id');
+    final jsonPayload = <String, dynamic>{
+      'user_id': user.id,
+      'title': expense.title,
+      'amount': expense.amount,
+      'type': expense.type,
+      'category_id': expense.categoryId,
+      'date': "${expense.date.year.toString().padLeft(4, '0')}-${expense.date.month.toString().padLeft(2, '0')}-${expense.date.day.toString().padLeft(2, '0')}",
+      'note': expense.note,
+    };
+    if (expense.id.isNotEmpty && !expense.id.startsWith('temp_') && !expense.id.startsWith('mock_')) {
+      jsonPayload['id'] = expense.id;
     }
 
     final res = await _client
@@ -93,9 +100,18 @@ class SupabaseExpenseRepository implements ExpenseRepository {
 
   @override
   Future<Expense> updateExpense(Expense expense) async {
+    final payload = <String, dynamic>{
+      'title': expense.title,
+      'amount': expense.amount,
+      'type': expense.type,
+      'category_id': expense.categoryId,
+      'date': "${expense.date.year.toString().padLeft(4, '0')}-${expense.date.month.toString().padLeft(2, '0')}-${expense.date.day.toString().padLeft(2, '0')}",
+      'note': expense.note,
+    };
+
     final res = await _client
         .from('expenses')
-        .update(expense.toJson())
+        .update(payload)
         .eq('id', expense.id)
         .select('*, categories(*)')
         .single();
