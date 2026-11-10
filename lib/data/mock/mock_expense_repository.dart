@@ -11,11 +11,14 @@ class MockExpenseRepository implements ExpenseRepository {
   final List<Category> _categories = List.from(Category.defaultCategories);
   final Uuid _uuid = const Uuid();
 
-  MockExpenseRepository() {
-    _seedInitialStudentData();
+  MockExpenseRepository({bool autoSeed = false}) {
+    if (autoSeed) {
+      seedDemoData();
+    }
   }
 
-  void _seedInitialStudentData() {
+  void seedDemoData() {
+    _expenses.clear();
     final now = DateTime.now();
     final y = now.year;
     final m = now.month;
@@ -25,7 +28,7 @@ class MockExpenseRepository implements ExpenseRepository {
     _expenses.addAll([
       Expense(
         id: 'mock_1',
-        userId: 'user_bahria_001',
+        userId: 'user_001',
         title: 'Monthly Allowance from Home',
         amount: 15000.0,
         type: 'income',
@@ -37,44 +40,44 @@ class MockExpenseRepository implements ExpenseRepository {
       ),
       Expense(
         id: 'mock_2',
-        userId: 'user_bahria_001',
-        title: 'Hostel Mess Bill (1st Installment)',
+        userId: 'user_001',
+        title: 'Hostel Mess Bill',
         amount: 4500.0,
         type: 'expense',
         categoryId: 3,
         category: categoriesMap[3],
         date: DateTime(y, m, 2),
-        note: 'October remaining + November advance',
+        note: 'Monthly mess share',
         createdAt: DateTime(y, m, 2, 12, 30),
       ),
       Expense(
         id: 'mock_3',
-        userId: 'user_bahria_001',
-        title: 'Metro Bus Card Monthly Recharge',
+        userId: 'user_001',
+        title: 'Metro Card Monthly Recharge',
         amount: 1500.0,
         type: 'expense',
         categoryId: 2,
         category: categoriesMap[2],
         date: DateTime(y, m, 3),
-        note: 'Saddar to Islamabad station',
+        note: 'Orange line pass',
         createdAt: DateTime(y, m, 3, 9, 15),
       ),
       Expense(
         id: 'mock_4',
-        userId: 'user_bahria_001',
-        title: 'MAD Lab Manual & Slides Photocopy',
+        userId: 'user_001',
+        title: 'Semester Photocopy & Slides',
         amount: 450.0,
         type: 'expense',
         categoryId: 4,
         category: categoriesMap[4],
         date: DateTime(y, m, 4),
-        note: 'Printed from Campus Photostat shop',
+        note: 'Printed from campus shop',
         createdAt: DateTime(y, m, 4, 14, 0),
       ),
       Expense(
         id: 'mock_5',
-        userId: 'user_bahria_001',
-        title: 'Cafeteria Lunch with Lab Group',
+        userId: 'user_001',
+        title: 'Campus Lunch with Lab Group',
         amount: 380.0,
         type: 'expense',
         categoryId: 1,
@@ -85,56 +88,56 @@ class MockExpenseRepository implements ExpenseRepository {
       ),
       Expense(
         id: 'mock_6',
-        userId: 'user_bahria_001',
-        title: 'Stationery & Project Register',
+        userId: 'user_001',
+        title: 'Stationery & Registers',
         amount: 320.0,
         type: 'expense',
         categoryId: 4,
         category: categoriesMap[4],
         date: DateTime(y, m, 6),
-        note: 'Markers and registers for semester submission',
+        note: 'Markers and registers',
         createdAt: DateTime(y, m, 6, 16, 20),
       ),
       Expense(
         id: 'mock_7',
-        userId: 'user_bahria_001',
-        title: 'Chai & Paratha at Gate 2',
+        userId: 'user_001',
+        title: 'Chai & Snacks at Canteen',
         amount: 180.0,
         type: 'expense',
         categoryId: 1,
         category: categoriesMap[1],
         date: DateTime(y, m, 7),
-        note: 'Evening break with classmates',
+        note: 'Evening tea with classmates',
         createdAt: DateTime(y, m, 7, 18, 10),
       ),
       Expense(
         id: 'mock_8',
-        userId: 'user_bahria_001',
-        title: 'Panadol & Allergy Medicine',
+        userId: 'user_001',
+        title: 'Pharmacy & Medicine',
         amount: 280.0,
         type: 'expense',
         categoryId: 5,
         category: categoriesMap[5],
         date: DateTime(y, m, 8),
-        note: 'Pharmacy near hostel',
+        note: 'Panadol from pharmacy',
         createdAt: DateTime(y, m, 8, 20, 0),
       ),
       Expense(
         id: 'mock_9',
-        userId: 'user_bahria_001',
+        userId: 'user_001',
         title: 'Freelance UI Design Gig',
         amount: 4000.0,
         type: 'income',
         categoryId: 8,
         category: categoriesMap[8],
         date: DateTime(y, m, 9),
-        note: 'Figma landing page wireframe',
+        note: 'Landing page wireframe',
         createdAt: DateTime(y, m, 9, 11, 0),
       ),
       Expense(
         id: 'mock_10',
-        userId: 'user_bahria_001',
-        title: 'Dhaba Dinner with Roommates',
+        userId: 'user_001',
+        title: 'Dinner with Roommates',
         amount: 720.0,
         type: 'expense',
         categoryId: 1,
@@ -144,6 +147,10 @@ class MockExpenseRepository implements ExpenseRepository {
         createdAt: DateTime(y, m, 9, 21, 30),
       ),
     ]);
+  }
+
+  void clearExpenses() {
+    _expenses.clear();
   }
 
   @override

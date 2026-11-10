@@ -4,13 +4,7 @@ import '../../domain/repositories/auth_repository.dart';
 
 /// In-memory mock authentication repository for instant local development and UI testing.
 class MockAuthRepository implements AuthRepository {
-  UserProfile? _currentUser = UserProfile(
-    id: 'user_bahria_001',
-    name: 'Zain Kashif',
-    email: 'zain.it6a@bahria.edu.pk',
-    monthlyBudget: 15000.0,
-    updatedAt: DateTime.now(),
-  );
+  UserProfile? _currentUser;
 
   final StreamController<UserProfile?> _authStreamController =
       StreamController<UserProfile?>.broadcast();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/expense_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -131,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
     final themeProvider = context.watch<ThemeProvider>();
     final auth = context.watch<AuthProvider>();
     final user = auth.currentUser;
-    final name = user?.name ?? 'Zain Kashif';
+    final name = user?.name ?? 'Student User';
     final email = user?.email ?? 'student@kharchabook.app';
     final budget = auth.monthlyBudget;
 
@@ -585,6 +586,75 @@ class ProfileScreen extends StatelessWidget {
                 Text(
                   '• Zain Kashif — 01-135232-107\n• Huraira Minhas — 01-135232-030',
                   style: TextStyle(fontSize: 12, color: secondaryTextColor, height: 1.4),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Section 4: Data & Demo Controls
+          Text(
+            'DATA & DEMO CONTROLS',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.8,
+              color: secondaryTextColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: cardBg,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: borderColor),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      final expenseProvider = Provider.of<ExpenseProvider>(context, listen: false);
+                      await expenseProvider.seedDemoTransactions(budget);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Sample student transactions loaded for demo.')),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.auto_fix_high_rounded, size: 16),
+                    label: const Text('Seed Demo', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: isDark ? AppColors.neonLime : AppColors.inkBlack,
+                      side: BorderSide(color: borderColor),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      final expenseProvider = Provider.of<ExpenseProvider>(context, listen: false);
+                      await expenseProvider.clearAllTransactions(budget);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('All transactions cleared. Clean slate active.')),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.delete_sweep_rounded, size: 16, color: AppColors.expense),
+                    label: const Text('Clear All', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.expense)),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.expense,
+                      side: BorderSide(color: borderColor),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
                 ),
               ],
             ),

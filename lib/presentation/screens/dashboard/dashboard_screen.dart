@@ -64,7 +64,7 @@ class DashboardScreen extends StatelessWidget {
     final auth = context.watch<AuthProvider>();
     final expenseProvider = context.watch<ExpenseProvider>();
 
-    final studentName = auth.currentUser?.name ?? 'Zain Kashif';
+    final studentName = auth.currentUser?.name ?? 'Student';
     final budget = auth.monthlyBudget;
     final expenses = expenseProvider.expenses;
     final groupedExpenses = _groupExpensesByDate(expenses);
@@ -130,6 +130,41 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
         actions: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.neonLimeSoft : AppColors.pastelMint,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isDark
+                    ? AppColors.neonLime.withValues(alpha: 0.3)
+                    : const Color(0xFF10B981).withValues(alpha: 0.4),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF10B981),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Cloud',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: isDark ? AppColors.neonLime : const Color(0xFF047857),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 2),
           Stack(
             children: [
               IconButton(

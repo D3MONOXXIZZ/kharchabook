@@ -238,4 +238,123 @@ class ExpenseProvider extends ChangeNotifier {
     _selectedDay = null;
     refreshData(currentBudget);
   }
+
+  /// On-demand demo dataset populator for presentation/viva testing
+  Future<void> seedDemoTransactions(double currentBudget) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final now = DateTime.now();
+      final y = now.year;
+      final m = now.month;
+
+      final sampleList = [
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Monthly Allowance from Home',
+          amount: 15000.0,
+          type: 'income',
+          categoryId: 7,
+          date: DateTime(y, m, 1),
+          note: 'Sent via EasyPaisa',
+          createdAt: DateTime(y, m, 1, 10, 0),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Hostel Mess Bill',
+          amount: 4500.0,
+          type: 'expense',
+          categoryId: 3,
+          date: DateTime(y, m, 2),
+          note: 'Monthly mess share',
+          createdAt: DateTime(y, m, 2, 12, 30),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Metro Card Monthly Recharge',
+          amount: 1500.0,
+          type: 'expense',
+          categoryId: 2,
+          date: DateTime(y, m, 3),
+          note: 'Orange line transit pass',
+          createdAt: DateTime(y, m, 3, 9, 15),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Semester Photocopy & Slides',
+          amount: 450.0,
+          type: 'expense',
+          categoryId: 4,
+          date: DateTime(y, m, 4),
+          note: 'Campus photostat',
+          createdAt: DateTime(y, m, 4, 14, 0),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Campus Lunch with Lab Group',
+          amount: 380.0,
+          type: 'expense',
+          categoryId: 1,
+          date: DateTime(y, m, 5),
+          note: 'Biryani and drink',
+          createdAt: DateTime(y, m, 5, 13, 45),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Freelance UI Design Gig',
+          amount: 4000.0,
+          type: 'income',
+          categoryId: 8,
+          date: DateTime(y, m, 9),
+          note: 'Landing page wireframe',
+          createdAt: DateTime(y, m, 9, 11, 0),
+        ),
+        Expense(
+          id: '',
+          userId: 'user_001',
+          title: 'Dhaba Dinner with Roommates',
+          amount: 720.0,
+          type: 'expense',
+          categoryId: 1,
+          date: DateTime(y, m, 9),
+          note: 'Dal chawal and karahi share',
+          createdAt: DateTime(y, m, 9, 21, 30),
+        ),
+      ];
+
+      for (final e in sampleList) {
+        await _expenseRepository.addExpense(e);
+      }
+      await refreshData(currentBudget);
+    } catch (e) {
+      _errorMessage = e.toString().replaceAll('Exception: ', '');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// Reset all transactions to an empty clean slate
+  Future<void> clearAllTransactions(double currentBudget) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final currentList = List<Expense>.from(_expenses);
+      for (final e in currentList) {
+        await _expenseRepository.deleteExpense(e.id);
+      }
+      await refreshData(currentBudget);
+    } catch (e) {
+      _errorMessage = e.toString().replaceAll('Exception: ', '');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }

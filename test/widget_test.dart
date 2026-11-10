@@ -16,8 +16,12 @@ void main() {
       expect(CurrencyFormatter.formatSigned(3000, isIncome: true), '+Rs. 3,000');
     });
 
-    test('MockExpenseRepository computes monthly summary correctly', () async {
+    test('MockExpenseRepository starts empty and computes monthly summary correctly when data is added', () async {
       final repo = MockExpenseRepository();
+      final initialExpenses = await repo.getExpenses();
+      expect(initialExpenses, isEmpty);
+
+      repo.seedDemoData();
       final now = DateTime.now();
       final summary = await repo.getMonthlySummary(month: now, monthlyBudget: 15000.0);
 
