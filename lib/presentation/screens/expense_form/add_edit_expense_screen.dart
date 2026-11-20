@@ -157,6 +157,15 @@ class _AddEditExpenseScreenState extends State<AddEditExpenseScreen> {
 
     if (success && mounted) {
       Navigator.of(context).pop();
+    } else if (!success && mounted) {
+      final msg = expenseProvider.errorMessage ?? 'Failed to save transaction. Please check your connection.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(msg),
+          backgroundColor: AppColors.expense,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     }
   }
 

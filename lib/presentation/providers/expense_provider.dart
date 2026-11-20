@@ -188,34 +188,34 @@ class ExpenseProvider extends ChangeNotifier {
     }
   }
 
-  void setSelectedMonth(DateTime month, double currentBudget) {
+  Future<void> setSelectedMonth(DateTime month, double currentBudget) async {
     _selectedMonth = DateTime(month.year, month.month, 1);
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
-  void nextMonth(double currentBudget) {
+  Future<void> nextMonth(double currentBudget) async {
     _selectedMonth = DateTime(_selectedMonth.year, _selectedMonth.month + 1, 1);
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
-  void previousMonth(double currentBudget) {
+  Future<void> previousMonth(double currentBudget) async {
     _selectedMonth = DateTime(_selectedMonth.year, _selectedMonth.month - 1, 1);
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
-  void setSearchQuery(String query, double currentBudget) {
+  Future<void> setSearchQuery(String query, double currentBudget) async {
     _searchQuery = query;
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
-  void setCategoryFilter(int? categoryId, double currentBudget) {
+  Future<void> setCategoryFilter(int? categoryId, double currentBudget) async {
     _selectedCategoryId = categoryId;
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
-  void setTypeFilter(String type, double currentBudget) {
+  Future<void> setTypeFilter(String type, double currentBudget) async {
     _selectedType = type;
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
   void setSelectedDay(DateTime? day) {
@@ -231,12 +231,12 @@ class ExpenseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetFilters(double currentBudget) {
+  Future<void> resetFilters(double currentBudget) async {
     _searchQuery = '';
     _selectedCategoryId = null;
     _selectedType = 'all';
     _selectedDay = null;
-    refreshData(currentBudget);
+    await refreshData(currentBudget);
   }
 
   /// On-demand demo dataset populator for presentation/viva testing
