@@ -64,7 +64,9 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id'] as int,
+      id: json['id'] is num
+          ? (json['id'] as num).toInt()
+          : (int.tryParse(json['id']?.toString() ?? '1') ?? 1),
       name: json['name'] as String,
       iconKey: json['icon'] as String? ?? 'more-horizontal',
       isIncome: json['is_income'] as bool? ?? false,

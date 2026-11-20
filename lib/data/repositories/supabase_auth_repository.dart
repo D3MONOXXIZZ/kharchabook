@@ -56,7 +56,13 @@ class SupabaseAuthRepository implements AuthRepository {
       throw Exception('Authentication failed');
     }
     final profile = await _fetchProfile(user.id, user.email ?? email);
-    return profile!;
+    return profile ??
+        UserProfile(
+          id: user.id,
+          name: email.split('@').first,
+          email: email,
+          updatedAt: DateTime.now(),
+        );
   }
 
   @override
@@ -69,11 +75,39 @@ class SupabaseAuthRepository implements AuthRepository {
       email: email.trim(),
       password: password,
       data: {'name': name.trim()},
+      emailRedirectTo: 'io.supabase.kharchabook://login-callback',
     );
     final user = res.user;
     if (user == null) {
       throw Exception('Registration failed');
     }
+
+    // If session is null (due to Supabase email confirmation requirement),
+    // attempt immediate login (leveraging database auto-confirm):
+    if (res.session == null) {
+      try {
+        final loginRes = await _client.auth.signInWithPassword(
+          email: email.trim(),
+          password: password,
+        );
+        if (loginRes.user != null) {
+          final profile = await _fetchProfile(loginRes.user!.id, email);
+          return profile ??
+              UserProfile(
+                id: loginRes.user!.id,
+                name: name,
+                email: email,
+                updatedAt: DateTime.now(),
+              );
+        }
+      } catch (_) {
+        // If signInWithPassword still fails because confirmation is enforced:
+        throw Exception(
+          'Account created! Please check your email to confirm your account, or sign in with your credentials.',
+        );
+      }
+    }
+
     final profile = await _fetchProfile(user.id, user.email ?? email);
     return profile ??
         UserProfile(

@@ -7,6 +7,10 @@ class SupabaseConfig {
   static const String anonKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoZmJidXh0dXl0eHR5a21rZmJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQyOTQwOTIsImV4cCI6MjEwOTg3MDA5Mn0.t24PER3oW2443Q8YtlpMHi-fUTn5kO0eLAWXZO-U0LA';
 
+  /// Standard redirect URL for mobile auth callbacks
+  static const String redirectUrl = 'io.supabase.kharchabook://login-callback';
+  static const String webRedirectUrl = 'https://lhfbbuxtuytxtykmkfbw.supabase.co';
+
   /// Check whether credentials have been configured
   static bool get isConfigured =>
       url.isNotEmpty &&

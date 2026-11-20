@@ -74,7 +74,27 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   @override
   Future<Expense> addExpense(Expense expense) async {
     final user = _client.auth.currentUser;
-    if (user == null) throw Exception('No authenticated user');
+    if (user == null) throw Exception('No authenticated user. Please sign in to save data.');
+
+    // Ensure profile row exists to prevent foreign key violation
+    try {
+      final existingProfile = await _client
+          .from('profiles')
+          .select('id')
+          .eq('id', user.id)
+          .maybeSingle();
+      if (existingProfile == null) {
+        await _client.from('profiles').upsert({
+          'id': user.id,
+          'name': user.userMetadata?['name'] ?? user.email?.split('@').first ?? 'Student',
+          'email': user.email ?? '',
+          'monthly_budget': 15000.0,
+          'updated_at': DateTime.now().toIso8601String(),
+        });
+      }
+    } catch (_) {
+      // Ignore if already present
+    }
 
     final jsonPayload = <String, dynamic>{
       'user_id': user.id,

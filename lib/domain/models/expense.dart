@@ -64,11 +64,15 @@ class Expense {
           ? (json['amount'] as num).toDouble()
           : (double.tryParse(json['amount']?.toString() ?? '0') ?? 0.0),
       type: json['type'] as String,
-      categoryId: json['category_id'] as int,
+      categoryId: json['category_id'] is num
+          ? (json['category_id'] as num).toInt()
+          : (int.tryParse(json['category_id']?.toString() ?? '1') ?? 1),
       category: resolvedCategory ??
-          (json['categories'] != null
+          (json['categories'] is Map<String, dynamic>
               ? Category.fromJson(json['categories'] as Map<String, dynamic>)
-              : null),
+              : (json['categories'] is List && (json['categories'] as List).isNotEmpty
+                  ? Category.fromJson((json['categories'] as List).first as Map<String, dynamic>)
+                  : null)),
       date: DateTime.parse(json['date'] as String),
       note: json['note'] as String?,
       createdAt: json['created_at'] != null
